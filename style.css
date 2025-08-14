@@ -1,0 +1,4 @@
+@media print{
+  header,footer,button,input{display:none!important}
+  .card{break-inside:avoid}
+}

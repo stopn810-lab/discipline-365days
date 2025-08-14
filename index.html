@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>365 Discipline</title>
+  <meta name="theme-color" content="#16a34a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <style>
+    :root{
+      --bg:#0b1020; --layer:#0f172a; --text:#e5e7eb; --muted:#9ca3af;
+      --ok:#16a34a; --warn:#f59e0b; --bad:#ef4444; --accent:#22c55e;
+      --edge:#1f2a44;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#0b1020,#0b1020 60%,#0f172a);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;min-height:100dvh;display:flex;flex-direction:column}
+    header{position:sticky;top:0;background:rgba(11,16,32,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--edge);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;z-index:10}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.3px}
+    .badge{width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#4ade80);display:grid;place-items:center;color:#06290f}
+    .container{width:min(1000px,92%);margin:18px auto 28px;display:grid;gap:16px}
+    .card{background:var(--layer);border:1px solid var(--edge);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    h2{margin:0 0 10px 0;font-size:20px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    button{border:none;border-radius:12px;padding:10px 14px;background:var(--accent);color:#05220e;font-weight:800;cursor:pointer}
+    button.ghost{background:#0b1020;color:var(--text);border:1px solid var(--edge)}
+    .pill{padding:6px 10px;border-radius:999px;border:1px solid var(--edge);background:#0b1020}
+    .muted{color:var(--muted);font-size:13px}
+    .list{display:grid;gap:8px}
+    .item{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--edge);border-radius:12px;padding:10px 12px;background:#0b1020}
+    .left{display:flex;align-items:center;gap:10px}
+    .title{font-weight:600}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:860px){.grid-2{grid-template-columns:1fr}}
+    .timer{font-variant-numeric:tabular-nums;font-weight:900;font-size:34px}
+    .big{font-size:40px}
+    .chart{display:grid;grid-template-columns:repeat(31,1fr);gap:4px}
+    .dot{height:14px;border-radius:4px;border:1px solid var(--edge);background:#0b1020}
+    .dot.done{background:var(--ok)}
+    .dot.current{background:var(--warn)}
+    .dot.reset{background:var(--bad)}
+    footer{padding:22px;text-align:center;color:var(--muted)}
+    a.link{color:#4ade80;text-decoration:none;border-bottom:1px dashed #4ade80}
+    .section-title{margin-top:6px;margin-bottom:8px;font-size:14px;color:#a3e635;font-weight:800;letter-spacing:.3px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="badge">365</div><div>Discipline</div></div>
+    <div class="row">
+      <button class="ghost" id="installBtn" hidden>Install App</button>
+      <button class="ghost" id="exportBtn">Export</button>
+      <button class="ghost" id="resetBtn">Hard Reset</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="row" style="justify-content:space-between;align-items:flex-end">
+        <div>
+          <div class="muted">Current day</div>
+          <div class="big" id="dayLabel">Day 0</div>
+        </div>
+        <div style="text-align:right">
+          <div class="muted">Time left in day</div>
+          <div class="timer" id="countdown">--:--:--</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="pill">Completed days: <b id="completedDays">0</b> / 365</div>
+        <div class="pill">Status: <b id="status">Not started</b></div>
+        <button id="startBtn">Start Challenge</button>
+        <button class="ghost" id="finishDayBtn">Finish Day</button>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Must Do (every day)</h2>
+        <div class="list" id="mustDoList"></div>
+      </div>
+      <div class="card">
+        <h2>Must Not Do (no violations)</h2>
+        <div class="list" id="mustNotList"></div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Can Do (optional bonus)</h2>
+        <div class="list" id="canDoList"></div>
+        <div class="muted">Optional: improves skills and momentum, not required to complete a day.</div>
+      </div>
+      <div class="card">
+        <h2>365-Day Chart</h2>
+        <div id="chart" class="chart"></div>
+        <div class="muted" style="margin-top:8px">Green = completed, Yellow = current, Red = resets (fail points).</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 365 Discipline • Works offline • PWA</footer>
+  <script src="app.js"></script>
+</body>
+</html>
